@@ -158,6 +158,7 @@
                         <th style="width:10%;">조회수</th>
                         <!--<th style="width:10%;">추천수</th>-->
                         <th style="width:20%;">작성날짜</th>
+                        <th style="width:10%;">수정</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -168,11 +169,15 @@
                 <tr>
 
                     <!--<td>{{wdata.id}}</td>-->
-                    <td onclick="displayContent()"> {{wdata.title}} </td>
-                    <td>{{request.user.username}}</td>
-                    <td>{{wdata.update_counter}}</td>
+                    <td onclick="Boardview({{wdata.id}})"> {{wdata.title}} </td>
+                    <td>{{wdata.author.username}}</td>
+                    <td>{{wdata.count}}</td>
                     <!--<td>#</td>-->
-                    <td>{{wdata.writedate}}</td>
+                    <td >{{wdata.writedate |date:"Y-m-d"}}</td>
+
+                    {% if wdata.author.username == request.user.username%}
+                        <td onclick="update({{ wdata.id }})">수정</td>
+                    {% endif %}
                 </tr>
 
                 {% endfor %}
@@ -210,35 +215,11 @@
       <!-- Pagination 끝-->
 
 
-      <!-- write -->
+
       <div class="row justify-content-md-center">
 			<div class="col-md-6 col-md-offset-3">
 
-                <!-- 내용 -->
-                <div id="cont"  style="display:none;" >
-                    <h2 style="text-align: center">CONTENT</h2>
-                          {% for wdata in vlist %}
 
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="section-title mb-5">
-                                            <h2>{{wdata.title}}</h2>
-                                        </div>
-                                    </div>
-                                </div>
-                                        <!-- 시작-->
-                                <div class="col-lg-12">
-                                        <p>{{wdata.content}}</p>
-                                </div>
-                                <hr>
-                                <div class="col-lg-12">
-                                    <a> 삭제</a>
-                                </div>
-
-
-                          {% endfor %}
-
-                </div>
                 <div id="ccform"  style="display:none;" >
                     <h2 style="text-align: center">COMMENT</h2>
 
@@ -254,7 +235,7 @@
  		                </div>
                         <div class="form-group">
  		                    <button class="btn btn-primary py-3" type="submit" value="Submit">submit</button>
- 		                    <button class="btn btn-primary py-3" type="reset" value="Reset">reset</button> <!--화면닫기로 수정할 것-->
+ 		                    <button class="btn btn-primary py-3" onclick="NondisplayInputForm()" >close</button> <!--화면닫기로 수정할 것-->
                         </div>
 	                </form>
 
@@ -270,11 +251,27 @@
             $('#ccform').css('display','block')
         }
 
-        function displayContent(){
-            $('#cont').css('display','block')
+        function NondisplayInputForm(){
+            $('#ccform').css('display','none')
         }
 
+        function Boardview(id){
+             location.href="{% url 'Boardview'%}?Boardview="+id;
+        }
 
+        function update(id) {
+            $.getJSON("{% url 'Boardupdate' %}?id="+id, function(jsonObj) {
+                $('#ccform').css('display', 'block')
+                const dom1 = $('[name="title"]');
+                const dom2 = $('[name="content"]');
+                dom1.removeAttr("placeholder");
+                dom1.attr("value", jsonObj.title);
+                dom2.removeAttr("placeholder");
+                dom2.text(jsonObj.content);
+
+                $('#ccform form').attr("action", "{% url 'Boardupdate' %}?id="+id)
+            });
+        }
     </script>
 
     <div class="footer">
