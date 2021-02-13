@@ -4,8 +4,8 @@ urlpatterns = [
     path('index/', views.index, name='index'),
     path('logout/', views.logout, name='logout'),
     path('mypage/', views.mypage, name='mypage'),
-
     path('What/', views.What, name='What'),
+    path('What2/', views.What2, name='What2'),
     path('How/', views.How, name='How'),
     path('Where/', views.Where, name='Where'),
     path('Board/', views.Board, name='Board'),
@@ -39,8 +39,11 @@ urlpatterns = [
     path('video3/', views.video3, name='video3'),
     path('video4/', views.video4, name='video4'),
     path('video5/', views.video5, name='video5'),
-    path('event12/', views.event12, name='event12'),
-    path('event1/', views.event1, name='event1'),
-    path('event2/', views.event2, name='event2'),
+    path('event121/', views.event121, name='event121'),
+    path('event11/', views.event11, name='event11'),
+    path('event21/', views.event21, name='event21'),
+    path('event1231/', views.event1231, name='event1231'),
+    path('event131/', views.event131, name='event131'),
+
 
 ]

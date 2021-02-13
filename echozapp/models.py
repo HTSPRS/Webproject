@@ -11,10 +11,7 @@ class Post(models.Model):
    # like = models.Field(default=0)
 
 
-    @property
-    def update_counter(self):
-        self.count+=1
-        self.save()
+
 
 
 # Create your models here.

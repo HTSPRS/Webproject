@@ -7,6 +7,7 @@ from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.utils import timezone
 
+
 def index(request) :
     return render(request,'index.html')
     #template = loader.get_template('index.html')
@@ -79,13 +80,14 @@ def Boardupdate(request):
 def What(request):
     return render(request, 'What.html')
 
+def What2(request):
+    return render(request, 'What2.html')
+
 def How(request):
     return render(request, 'How.html')
 
 def Where(request):
     return render(request, 'Where.html')
-
-
 
 def Events(request):
     return render(request, 'Events.html')
@@ -165,15 +167,22 @@ def video4(request):
 def video5(request):
     return render(request, 'video5.html')
 
-def event12(request):
-    return render(request, 'event12.html')
+def event121(request):
+    return render(request, 'event121.html')
 
-def event1(request):
-    return render(request, 'event1.html')
+def event1231(request):
+    return render(request, 'event1231.html')
+
+def event11(request):
+    return render(request, 'event11.html')
+
+def event131(request):
+    return render(request, 'event131.html')
 
 
-def event2(request):
-    return render(request, 'event2.html')
+def event21(request):
+    return render(request, 'event21.html')
+
 
 
 
