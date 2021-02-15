@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 urlpatterns = [
+    path('map/', views.map, name='map'),
+    path('mapmy/', views.mapmy, name='mapmy'),
     path('index/', views.index, name='index'),
     path('logout/', views.logout, name='logout'),
     path('mypage/', views.mypage, name='mypage'),
@@ -13,6 +15,10 @@ urlpatterns = [
     path('Boardview/', views.Boardview, name='Boardview'),
     path('Boardupdate/', views.Boardupdate, name='Boardupdate'),
     path('Boarddel/', views.Boarddel, name='Boarddel'),
+    path("search1/", views.Board, name="search1"),
+    path("search2/", views.Board, name="search2"),
+    path("search1/<name>", views.search1, name="search1"),
+    path("search2/<content>", views.search2, name="search2"),
     path('Events/', views.Events, name='Events'),
     path('checklist0/', views.checklist0, name='checklist0'),
     path('checklist1/', views.checklist1, name='checklist1'),

@@ -6,12 +6,19 @@ from .models import Post
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.utils import timezone
+from .models import Latlng
 
+def map(request):
+    latlng = Latlng.objects.all()
+    return render(request, 'map.html', {'latlng': latlng})
+
+def mapmy(request):
+    latlng = Latlng.objects.all()
+    return render(request, 'mapmy.html', {'latlng': latlng})
 
 def index(request) :
     return render(request,'index.html')
-    #template = loader.get_template('index.html')
-    #return HttpResponse(template.render(None, request))
+
 
 def logout(request):
     if request.user.is_authenticated:
@@ -21,7 +28,7 @@ def logout(request):
 def mypage(request):
     context= None
     if request.user.is_authenticated:
-        context ={'loginuser' : request.user.last_name+request.user.first_name}
+        context ={'loginid': request.user.username,'loginuser' : request.user.last_name+request.user.first_name}
     return render(request, 'mypage.html',context)
 
 #글작성
@@ -76,6 +83,23 @@ def Boardupdate(request):
         update = Post.objects.get(id=id)
         jsonContent={"title" : update.title, "content": update.content }
         return JsonResponse( jsonContent, json_dumps_params={'ensure_ascii':False})
+
+def search1(request, name) :
+    page = request.GET.get('page', 1)
+    vlist = Post.objects.filter(title__contains = name)
+    paginator = Paginator(vlist, 3)
+    vlistpage = paginator.get_page(page)
+
+    context = {"vlist": vlistpage}
+    return render(request, 'Board.html', context)
+
+def search2(request, content):
+    page = request.GET.get('page', 1)
+    vlist = Post.objects.filter(content__contains=content)
+    paginator = Paginator(vlist, 3)
+    vlistpage = paginator.get_page(page)
+    context = {"vlist": vlistpage}
+    return render(request, 'Board.html', context)
 
 def What(request):
     return render(request, 'What.html')
