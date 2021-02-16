@@ -1,13 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
-class Latlng(models.Model):
-    name = models.CharField(max_length=50)
-    lat = models.DecimalField(max_digits=7, decimal_places=3)
-    lng = models.DecimalField(max_digits=7, decimal_places=3)
-
-    def __str__(self):
-        return self.name + "," + str(self.lat) + "," + str(self.lng)
+from django.utils import timezone
 
 
 class Post(models.Model):
@@ -18,7 +11,12 @@ class Post(models.Model):
     count = models.IntegerField(default=0)
 
 
+class Latlng(models.Model):
+    name = models.CharField(max_length=50)
+    lat = models.DecimalField(max_digits=7, decimal_places=3)
+    lng = models.DecimalField(max_digits=7, decimal_places=3)
+    address = models.CharField(max_length=100)
+    homepage = models.CharField(max_length=100)
 
-
-
-# Create your models here.
+    def __str__(self):
+        return self.name + "," + str(self.lat) + "," + str(self.lng)

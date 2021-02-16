@@ -1,8 +1,7 @@
 from django.urls import path
 from . import views
+
 urlpatterns = [
-    path('map/', views.map, name='map'),
-    path('mapmy/', views.mapmy, name='mapmy'),
     path('index/', views.index, name='index'),
     path('logout/', views.logout, name='logout'),
     path('mypage/', views.mypage, name='mypage'),
@@ -50,6 +49,12 @@ urlpatterns = [
     path('event21/', views.event21, name='event21'),
     path('event1231/', views.event1231, name='event1231'),
     path('event131/', views.event131, name='event131'),
+    path('book1/', views.book1, name='book1'),
+    path('book2/', views.book2, name='book2'),
+    path('book3/', views.book3, name='book3'),
+    path('book4/', views.book4, name='book4'),
+    path('map/', views.map, name='map'),
+    path('map_my/', views.map_my, name='map_my'),
 
 
 ]

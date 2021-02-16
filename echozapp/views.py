@@ -6,19 +6,21 @@ from .models import Post
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.utils import timezone
-from .models import Latlng
+from echozapp.models import Latlng
 
 def map(request):
     latlng = Latlng.objects.all()
     return render(request, 'map.html', {'latlng': latlng})
 
-def mapmy(request):
+def map_my(request):
     latlng = Latlng.objects.all()
-    return render(request, 'mapmy.html', {'latlng': latlng})
+    return render(request, 'map_my.html', {'latlng': latlng})
+
 
 def index(request) :
     return render(request,'index.html')
-
+    #template = loader.get_template('index.html')
+    #return HttpResponse(template.render(None, request))
 
 def logout(request):
     if request.user.is_authenticated:
@@ -100,6 +102,7 @@ def search2(request, content):
     vlistpage = paginator.get_page(page)
     context = {"vlist": vlistpage}
     return render(request, 'Board.html', context)
+
 
 def What(request):
     return render(request, 'What.html')
@@ -207,6 +210,17 @@ def event131(request):
 def event21(request):
     return render(request, 'event21.html')
 
+def book1(request):
+    return render(request, 'book1.html')
+
+def book2(request):
+    return render(request, 'book2.html')
+
+def book3(request):
+    return render(request, 'book3.html')
+
+def book4(request):
+    return render(request, 'book4.html')
 
 
 
@@ -214,4 +228,3 @@ def blogSingle(request) :
     template = loader.get_template('blog-single.html')
     return HttpResponse(template.render(None, request))
 
-# Create your views here.
