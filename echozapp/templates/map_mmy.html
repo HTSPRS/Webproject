@@ -23,34 +23,26 @@
 
 {% block content %}
 
-
     <div class="site-section">
       <div class="container">
-        <div class="row">
-          <div class="col-lg-8 single-content">
-            <div class="section-title">
-              <h2>In 서울</h2> </div>
-            
-    <p class="mb-5">
-        <div id="map" style="width:700px;height:700px;align:middle;"></div></p>
-    <p>
-		  START<img src="/static/images/lclick.png "width="40" height="40">
-		  STOP <img src="/static/images/rclick.png "width="40" height="40" style="margin-right: 450px;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <button  class="btn btn-outline-light" style=" background-color : white; border :white " onclick="deleteClickLine(); deleteCircleDot(); deleteDistnce();"><img src="/static/images/refresh.png "width="35" height="35"></button><br>
-    </p>
+		  <div class="col-lg-9">
 
+      <div id="map" style="width:700px;height:500px;align:middle;"></div>
+      <p>
+		  START<img src="/static/images/lclick.png "width="50" height="50">
 
-
+		  STOP <img src="/static/images/rclick.png "width="50" height="50" style="margin-right: 450px;">
+		  <button  class="btn btn-outline-light" style=" background-color : white; border :white " onclick="deleteClickLine(); deleteCircleDot(); deleteDistnce(); " ><img src="/static/images/refresh.png "width="45" height="45"></button><br>
+      </p>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1cc2187c8717ffab77eb12ceab5806ae"></script>
-
     <script>
-    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-        mapOption = {
-            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-            level: 10 // 지도의 확대 레벨
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+    mapOption = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 6 // 지도의 확대 레벨
     };
 
-    var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
 /* 추가부분 */
 var drawingFlag = false; // 선이 그려지고 있는 상태를 가지고 있을 변수입니다
@@ -61,7 +53,7 @@ var dots = {}; // 선이 그려지고 있을때 클릭할 때마다 클릭 지�
 /* 추가부분 끝*/
 
 // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
-    if (navigator.geolocation) {
+if (navigator.geolocation) {
 
     // GeoLocation을 이용해서 접속 위치를 얻어옵니다
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -77,39 +69,41 @@ var dots = {}; // 선이 그려지고 있을때 클릭할 때마다 클릭 지�
 
       });
 
-    } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
 
     var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),
         message = 'geolocation을 사용할수 없어요..'
 
     displayMarker(locPosition, message);
-    }
+}
 
-    var imageSrc = "/static/images/saessag.png", // 마커이미지의 주소입니다
-        imageSize = new kakao.maps.Size(30, 30), // 마커이미지의 크기입니다
-        imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+var imageSrc = "/static/images/saessag.png", // 마커이미지의 주소입니다
+    imageSize = new kakao.maps.Size(30, 30), // 마커이미지의 크기입니다
+    imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
-    // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
-        markerPosition = new kakao.maps.LatLng(37.54699, 127.09598); // 마커가 표시될 위치입니다
+// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+    markerPosition = new kakao.maps.LatLng(37.54699, 127.09598); // 마커가 표시될 위치입니다
 
 
-    // 지도에 마커와 인포윈도우를 표시하는 함수입니다
-    function displayMarker(locPosition, message) {
+// 지도에 마커와 인포윈도우를 표시하는 함수입니다
+function displayMarker(locPosition, message) {
 
-    // 96개의 상점마커가 표시될 위치입니다
-    var markerPosition = [ {% for seoul in seoul.all %}
-    {       {% if seoul.homepage == no %}
-        	 	    content: '<div class="info">' + '<div class="title" style="padding:5px;">' + '{{seoul.name}}' + '</div>'+'<div class="body">' + '<div class="body">' + '<div >' +  '<div>{{seoul.address}}</div>' +'</div>'+'</div>'+'</div>',
-            {% else %}
-        		    content: '<div class="info">' + '<div class="title">' + '{{seoul.name}}' + '</div>'+'<div class="body">'+ '<div class="desc">' + '<div class="ellipsis">{{seoul.address}}</div>' +'<div><a href="{{seoul.homepage}}" target="_blank" class="link">홈페이지</a></div>'+'</div>'+'</div>'+'</div>',
-            {% endif %}
-                    latlng: new kakao.maps.LatLng({{seoul.lat}}, {{seoul.lng}})
+// 96개의 상점마커가 표시될 위치입니다
+var markerPosition = [ {% for latlng in latlng.all %}
+{       {% if latlng.homepage == no %}
+        	 	content: '<div class="info">' + '<div class="title" style="padding:5px;">' + '{{latlng.name}}' + '</div>'+'<div class="body">' + '<div class="body">' + '<div >' +  '<div>{{latlng.address}}</div>' +'</div>'+'</div>'+'</div>',
+        {% else %}
+        		content: '<div class="info">' + '<div class="title">' + '{{latlng.name}}' + '</div>'+'<div class="body">'+ '<div class="desc">' +  '<div class="ellipsis">{{latlng.address}}</div>' +'<div><a href="{{latlng.homepage}}" target="_blank" class="link">홈페이지</a></div>'+'</div>'+'</div>'+'</div>',
+        {% endif %}
+        latlng: new kakao.maps.LatLng({{latlng.lat}}, {{latlng.lng}})
+
+
+
     },
-    {% endfor %}
-    ];
+{% endfor %} ];
 
-    for (var i = 0; i < markerPosition.length; i ++) {
+for (var i = 0; i < markerPosition.length; i ++) {
     // 마커를 생성합니다
     var marker = new kakao.maps.Marker({
         map: map, // 마커를 표시할 지도
@@ -129,15 +123,15 @@ var dots = {}; // 선이 그려지고 있을때 클릭할 때마다 클릭 지�
         kakao.maps.event.addListener(marker, 'click', function() {
             infowindow.open(map, marker);});
     })(marker, infowindow);
-    }
+}
 
-   var marker = new kakao.maps.Marker({
+var marker = new kakao.maps.Marker({
         map: map,
         position: locPosition
     });
 
     map.setCenter(locPosition);
-    }
+}
 
 /* 추가부분*/
 // 지도에 클릭 이벤트를 등록합니다
@@ -400,73 +394,8 @@ function getTimeHTML(distance) {
     return content;
 }
 /*추가 부분 끝*/
-    </script>
+</script>
 
-            <div class="post-meta d-flex mb-5">
-              <div class="vcard">
-                  <span class="date-read">Update <span class="icon-star2"></span> Feb 14</span>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="col-lg-4 ml-auto">
-            <div class="section-title">
-              <h2>Stores List</h2>
-            </div>
-          <ul>
-              <li><a href="https://www.thepicker.net/">더 피커</a></li>
-              <li><a href="https://blog.naver.com/almangmarket">알맹상점</a></li>
-              <li><a href="https://www.instagram.com/thanksto__zerowaste.seoul">덕분애</a></li>
-              <li><a href="https://instagram.com/dear.earth.korea">디어얼스</a></li>
-              <li><a href="https://instagram.com/youmean.alot">유민얼랏</a></li>
-              <li><a href="https://instagram.com/__light_breeze">빛바람</a></li>
-              <li><a href="https://www.instagram.com/zerowaste_jigu">지구샵</a></li>
-              <li><a href="https://www.instagram.com/song_for_earth">송포어스</a></li>
-              <li><a href="https://instagram.com/hug_a_whale">허그어웨일</a></li>
-              <li><a href="https://cafe.naver.com/byulkkol">카페별꼴</a></li>
-              <li><a href="https://www.facebook.com/vegancafedy">달냥</a></li>
-              <li><a href="https://www.instagram.com/cafedadalab">다다랩</a></li>
-              <li><a href="https://www.facebook.com/CafeMargot">마고카페</a></li>
-              <li><a href="https://www.facebook.com/ppuriontheplate">뿌리온더플레이트</a></li>
-              <li><a href="https://www.instagram.com/bottle_factory">보틀팩토리</a></li>
-              <li><a href="https://www.instagram.com/earth__us">얼스어스</a></li>
-              <li><a href="https://www.instagram.com/namu_geuneul">우리동네그늘</a></li>
-              <li><a href="https://ko-kr.facebook.com/cafemangwon">카페엠</a></li>
-              <li>하우스플랜트2호점</li>
-              <li>바오밥나무</li>
-              <li><a href="https://http://www.instagram.com/readytowellness">레디투웰니스</a></li>
-              <li><a href="https://instagram.com/dear.eco">디어에코</a></li>
-              <li><a href="https://www.bgreen.co.kr">비그린</a></li>
-              <li><a href="https://www.instagram.com/snse_12">가치가게</a></li>
-              <li><a href="https://cafe.naver.com/gothechorok">더초록</a></li>
-              <li><a href="https://www.facebook.com/roundtriangle/">라운드트라이앵글</a></li>
-              <li><a href="https://touch4good.com/">터치포굿</a></li>
-              <li><a href="http://www.sb.go.kr/dongoffice">동선 나눔점방</a></li>
-              <li>라마홈</li>
-              <li><a href="https://www.instagram.com/gonggi_2020/">대안생활 공기</a></li>
-              <li><a href="https://ko.wasteupso.com/">waste upso</a></li>
-              <li><a href="https://www.instagram.com/magazine.ssssl/">무포장 가게 쓸</a></li>
-              <li><a href="https://www.innovationpark.kr/">없는가게쓸</a></li>
-              <li><a href="https://www.instagram.com/rogpashop/">사직동그가게</a></li>
-              <li>브릿지엣지</li>
-              <li><a href="https://www.instagram.com/cafe.gyute/">곁애</a></li>
-              <li><a href="https://www.instagram.com/sustainable_habits_/">서스테인어블 해빗</a></li>
-              <li><a href="http://www.papernuts.kr/">페이퍼넛츠</a></li>
-              <li><a href="https://www.instagram.com/apbbang/">앞으로의 빵집</a></li>
-              <li><a href="https://www.instagram.com/forfourbread/">포포브레드</a></li>
-              <li><a href="https://www.instagram.com/giut_giut/">기웃기웃</a></li>
-              <li><a href="https://www.instagram.com/molehand/">두더지손가게</a></li>
-              <li><a href="https://www.instagram.com/quoirez.b_gusan/">쿠아레비 구산점</a></li>
-              <li><a href="https://www.instagram.com/trans_614/">카페 드랜스</a></li>
-
-            </ul>
-
-            
-            <p>
-              <a href="/echozapp/map/" class="more">See All Stores<span class="icon-keyboard_arrow_right"></span></a>
-            </p>
-          </div>
         </div>
       </div>
     </div>

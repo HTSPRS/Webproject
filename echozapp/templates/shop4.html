@@ -29,8 +29,8 @@
         <div class="row">
           <div class="col-lg-8 single-content">
             <div class="section-title">
-              <h2>In 서울</h2> </div>
-            
+              <h2>In 전라/광주</h2> </div>
+
     <p class="mb-5">
         <div id="map" style="width:700px;height:700px;align:middle;"></div></p>
     <p>
@@ -53,11 +53,11 @@
     var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
 /* 추가부분 */
-var drawingFlag = false; // 선이 그려지고 있는 상태를 가지고 있을 변수입니다
-var moveLine; // 선이 그려지고 있을때 마우스 움직임에 따라 그려질 선 객체 입니다
-var clickLine // 마우스로 클릭한 좌표로 그려질 선 객체입니다
-var distanceOverlay; // 선의 거리정보를 표시할 커스텀오버레이 입니다
-var dots = {}; // 선이 그려지고 있을때 클릭할 때마다 클릭 지점과 거리를 표시하는 커스텀 오버레이 배열입니다.
+    var drawingFlag = false; // 선이 그려지고 있는 상태를 가지고 있을 변수입니다
+    var moveLine; // 선이 그려지고 있을때 마우스 움직임에 따라 그려질 선 객체 입니다
+    var clickLine // 마우스로 클릭한 좌표로 그려질 선 객체입니다
+    var distanceOverlay; // 선의 거리정보를 표시할 커스텀오버레이 입니다
+    var dots = {}; // 선이 그려지고 있을때 클릭할 때마다 클릭 지점과 거리를 표시하는 커스텀 오버레이 배열입니다.
 /* 추가부분 끝*/
 
 // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
@@ -98,13 +98,13 @@ var dots = {}; // 선이 그려지고 있을때 클릭할 때마다 클릭 지�
     function displayMarker(locPosition, message) {
 
     // 96개의 상점마커가 표시될 위치입니다
-    var markerPosition = [ {% for seoul in seoul.all %}
-    {       {% if seoul.homepage == no %}
-        	 	    content: '<div class="info">' + '<div class="title" style="padding:5px;">' + '{{seoul.name}}' + '</div>'+'<div class="body">' + '<div class="body">' + '<div >' +  '<div>{{seoul.address}}</div>' +'</div>'+'</div>'+'</div>',
+    var markerPosition = [ {% for jg in jg.all %}
+    {       {% if jg.homepage == no %}
+        	 	    content: '<div class="info">' + '<div class="title" style="padding:5px;">' + '{{jg.name}}' + '</div>'+'<div class="body">' + '<div class="body">' + '<div >' +  '<div>{{jg.address}}</div>' +'</div>'+'</div>'+'</div>',
             {% else %}
-        		    content: '<div class="info">' + '<div class="title">' + '{{seoul.name}}' + '</div>'+'<div class="body">'+ '<div class="desc">' + '<div class="ellipsis">{{seoul.address}}</div>' +'<div><a href="{{seoul.homepage}}" target="_blank" class="link">홈페이지</a></div>'+'</div>'+'</div>'+'</div>',
+        		    content: '<div class="info">' + '<div class="title">' + '{{jg.name}}' + '</div>'+'<div class="body">'+ '<div class="desc">' + '<div class="ellipsis">{{jg.address}}</div>' +'<div><a href="{{jg.homepage}}" target="_blank" class="link">홈페이지</a></div>'+'</div>'+'</div>'+'</div>',
             {% endif %}
-                    latlng: new kakao.maps.LatLng({{seoul.lat}}, {{seoul.lng}})
+                    latlng: new kakao.maps.LatLng({{jg.lat}}, {{jg.lng}})
     },
     {% endfor %}
     ];
@@ -415,54 +415,17 @@ function getTimeHTML(distance) {
               <h2>Stores List</h2>
             </div>
           <ul>
-              <li><a href="https://www.thepicker.net/">더 피커</a></li>
-              <li><a href="https://blog.naver.com/almangmarket">알맹상점</a></li>
-              <li><a href="https://www.instagram.com/thanksto__zerowaste.seoul">덕분애</a></li>
-              <li><a href="https://instagram.com/dear.earth.korea">디어얼스</a></li>
-              <li><a href="https://instagram.com/youmean.alot">유민얼랏</a></li>
-              <li><a href="https://instagram.com/__light_breeze">빛바람</a></li>
-              <li><a href="https://www.instagram.com/zerowaste_jigu">지구샵</a></li>
-              <li><a href="https://www.instagram.com/song_for_earth">송포어스</a></li>
-              <li><a href="https://instagram.com/hug_a_whale">허그어웨일</a></li>
-              <li><a href="https://cafe.naver.com/byulkkol">카페별꼴</a></li>
-              <li><a href="https://www.facebook.com/vegancafedy">달냥</a></li>
-              <li><a href="https://www.instagram.com/cafedadalab">다다랩</a></li>
-              <li><a href="https://www.facebook.com/CafeMargot">마고카페</a></li>
-              <li><a href="https://www.facebook.com/ppuriontheplate">뿌리온더플레이트</a></li>
-              <li><a href="https://www.instagram.com/bottle_factory">보틀팩토리</a></li>
-              <li><a href="https://www.instagram.com/earth__us">얼스어스</a></li>
-              <li><a href="https://www.instagram.com/namu_geuneul">우리동네그늘</a></li>
-              <li><a href="https://ko-kr.facebook.com/cafemangwon">카페엠</a></li>
-              <li>하우스플랜트2호점</li>
-              <li>바오밥나무</li>
-              <li><a href="https://http://www.instagram.com/readytowellness">레디투웰니스</a></li>
-              <li><a href="https://instagram.com/dear.eco">디어에코</a></li>
-              <li><a href="https://www.bgreen.co.kr">비그린</a></li>
-              <li><a href="https://www.instagram.com/snse_12">가치가게</a></li>
-              <li><a href="https://cafe.naver.com/gothechorok">더초록</a></li>
-              <li><a href="https://www.facebook.com/roundtriangle/">라운드트라이앵글</a></li>
-              <li><a href="https://touch4good.com/">터치포굿</a></li>
-              <li><a href="http://www.sb.go.kr/dongoffice">동선 나눔점방</a></li>
-              <li>라마홈</li>
-              <li><a href="https://www.instagram.com/gonggi_2020/">대안생활 공기</a></li>
-              <li><a href="https://ko.wasteupso.com/">waste upso</a></li>
-              <li><a href="https://www.instagram.com/magazine.ssssl/">무포장 가게 쓸</a></li>
-              <li><a href="https://www.innovationpark.kr/">없는가게쓸</a></li>
-              <li><a href="https://www.instagram.com/rogpashop/">사직동그가게</a></li>
-              <li>브릿지엣지</li>
-              <li><a href="https://www.instagram.com/cafe.gyute/">곁애</a></li>
-              <li><a href="https://www.instagram.com/sustainable_habits_/">서스테인어블 해빗</a></li>
-              <li><a href="http://www.papernuts.kr/">페이퍼넛츠</a></li>
-              <li><a href="https://www.instagram.com/apbbang/">앞으로의 빵집</a></li>
-              <li><a href="https://www.instagram.com/forfourbread/">포포브레드</a></li>
-              <li><a href="https://www.instagram.com/giut_giut/">기웃기웃</a></li>
-              <li><a href="https://www.instagram.com/molehand/">두더지손가게</a></li>
-              <li><a href="https://www.instagram.com/quoirez.b_gusan/">쿠아레비 구산점</a></li>
-              <li><a href="https://www.instagram.com/trans_614/">카페 드랜스</a></li>
+              <li><a href="https://www.instagram.com/@nadanarae">달팽이 가게</a></li>
+              <li><a href="https://www.instagram.com/mikrokosmos7000">소우주</a></li>
+              <li><a href="http://neulmigok.com">늘미곡</a></li>
+              <li>NO플라스틱카페</li>
+              <li>율소리에</li>
+              <li><a href="https://smartstore.naver.com/sunsunjubang">선선한 주방</a></li>
+              <li><a href="https://smartstore.naver.com/vegan_dalyang">포레스테이너블 베이커리</a></li>
+              <li><a href="https://www.instagram.com/cafe20_2roun0gan">이로운 공간</a></li>
+              <li><a href="https://www.instagram.com/bakery_breadnrose/">베이커리 빵과 장미</a></li>
+         </ul>
 
-            </ul>
-
-            
             <p>
               <a href="/echozapp/map/" class="more">See All Stores<span class="icon-keyboard_arrow_right"></span></a>
             </p>

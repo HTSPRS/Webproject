@@ -6,15 +6,7 @@ from .models import Post
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.utils import timezone
-from echozapp.models import Latlng
-
-def map(request):
-    latlng = Latlng.objects.all()
-    return render(request, 'map.html', {'latlng': latlng})
-
-def map_my(request):
-    latlng = Latlng.objects.all()
-    return render(request, 'map_my.html', {'latlng': latlng})
+from echozapp.models import Latlng, Seoul, GIG, CD, JG, GDBU, Jeju
 
 
 def index(request) :
@@ -30,8 +22,17 @@ def logout(request):
 def mypage(request):
     context= None
     if request.user.is_authenticated:
-        context ={'loginid': request.user.username,'loginuser' : request.user.last_name+request.user.first_name}
+        author = request.user.id
+        user_post=Post.objects.filter(author_id=author)
+        user_post = user_post.order_by('-writedate')
+        myboardcount = user_post.count()
+        page = request.GET.get('page', 1)
+        paginator = Paginator(user_post, 3)
+        user_postpage = paginator.get_page(page)
+        context ={'loginid': request.user.username,'loginuser' : request.user.last_name+request.user.first_name, 'Post' : user_post, 'myboardcount' : myboardcount, 'user_postpage' : user_postpage}
+
     return render(request, 'mypage.html',context)
+
 
 #글작성
 def Boardwrite(request):
@@ -155,15 +156,6 @@ def news7(request):
 def news8(request):
     return render(request, 'news8.html')
 
-def shop1(request):
-    return render(request, 'shop1.html')
-
-def shop2(request):
-    return render(request, 'shop2.html')
-
-def shop3(request):
-    return render(request, 'shop3.html')
-
 def tip1(request):
     return render(request, 'tip1.html')
 
@@ -227,4 +219,36 @@ def book4(request):
 def blogSingle(request) :
     template = loader.get_template('blog-single.html')
     return HttpResponse(template.render(None, request))
+
+def map(request):
+    latlng = Latlng.objects.all()
+    return render(request, 'map.html', {'latlng': latlng})
+
+def map_my(request):
+    latlng = Latlng.objects.all()
+    return render(request, 'map_my.html', {'latlng': latlng})
+
+def shop1(request):
+    seoul = Seoul.objects.all()
+    return render(request, 'shop1.html', {'seoul': seoul})
+
+def shop2(request):
+    gig = GIG.objects.all()
+    return render(request, 'shop2.html', {'gig': gig})
+
+def shop3(request):
+    cd = CD.objects.all()
+    return render(request, 'shop3.html', {'cd': cd})
+
+def shop4(request):
+    jg = JG.objects.all()
+    return render(request, 'shop4.html', {'jg': jg})
+
+def shop5(request):
+    gdbu = GDBU.objects.all()
+    return render(request, 'shop5.html', {'gdbu': gdbu})
+
+def shop6(request):
+    jeju = Jeju.objects.all()
+    return render(request, 'shop6.html', {'jeju': jeju})
 

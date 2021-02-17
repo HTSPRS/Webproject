@@ -9,25 +9,20 @@
     	.info .desc {position: relative;margin: 13px 10px 0 10px;height: 75px;}
     	.desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
     	.desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
+
+
     	.info .link {color: #5085BB;}
-
-
 {% endblock %}
 
 {% block content %}
 
-
     <div class="site-section">
       <div class="container">
- 		<div class="row">
-          <div class="col-lg-9">
-            <div class="section-title">
-              <span class="caption d-block small">step 5</span>
-              <h2>Where is the Zero Waste stores?</h2>
-            </div>
+		  <div class="col-lg-9">
+        <p style="margin-top:-12px">
+        <b>Chrome 브라우저는 https 환경에서만 geolocation을 지원합니다.</b> 참고해주세요.</p>
 
       <div id="map" style="width:700px;height:500px;align:middle;"></div>
-    <br>
 
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1cc2187c8717ffab77eb12ceab5806ae"></script>
     <script>
@@ -78,11 +73,10 @@ function displayMarker(locPosition, message) {
 
 // 96개의 상점마커가 표시될 위치입니다
 var markerPosition = [ {% for latlng in latlng.all %}
-{       {% if latlng.homepage %}
-        	 	content: '<div class="info">' + '<div class="title">' + '{{latlng.name}}' + '</div>'+'<div class="body">'+ '<div class="desc">' +  '<div class="ellipsis">{{latlng.address}}</div>' +'<div><a href="{{latlng.homepage}}" target="_blank" class="link">홈페이지</a></div>'+'</div>'+'</div>'+'</div>',
+{       {% if latlng.homepage == no %}
+        	 	content: '<div class="info">' + '<div class="title" style="padding:5px;">' + '{{latlng.name}}' + '</div>'+'<div class="body">' + '<div class="body">' + '<div >' +  '<div>{{latlng.address}}</div>' +'</div>'+'</div>'+'</div>',
         {% else %}
-        		content: '<div class="info">' + '<div class="title">' + '{{latlng.name}}' + '</div>'+'<div class="body">' + '<div class="desc">' + '<div class="ellipsis">'  +'{{latlng.address}}'+	'</div>' +'</div>'+'</div>'+'</div>',
-
+        		content: '<div class="info">' + '<div class="title">' + '{{latlng.name}}' + '</div>'+'<div class="body">'+ '<div class="desc">' +  '<div class="ellipsis">{{latlng.address}}</div>' +'<div><a href="{{latlng.homepage}}" target="_blank" class="link">홈페이지</a></div>'+'</div>'+'</div>'+'</div>',
         {% endif %}
                 latlng: new kakao.maps.LatLng({{latlng.lat}}, {{latlng.lng}})
     },
@@ -118,87 +112,8 @@ var marker = new kakao.maps.Marker({
     map.setCenter(locPosition);
 }
 </script>
-        <p>
-              <a href="/echozapp/shop/" class="more">근처 상점 찾기<span class="icon-keyboard_arrow_right"></span></a>
-        </p>
-        <p style="margin-top:-12px"> <b>Chrome 브라우저는 https 환경에서만 geolocation을 지원합니다.</b> 참고해주세요.</p>
-        </div>
-
-          <div class="col-lg-3">
-            <div class="section-title">
-              <span class="caption d-block small">STEP 6</span>
-              <h2>By Cities</h2>
-            </div>
-
-            <div class="trend-entry d-flex">
-              <div class="number align-self-start">01</div>
-              <div class="trend-contents">
-                <h2><a href="/echozapp/shop1/">서울</a></h2>
-                <div class="post-meta">
-                  <span class="date-read">Update <span class="icon-star2"></span> Feb 14</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="trend-entry d-flex">
-              <div class="number align-self-start">02</div>
-              <div class="trend-contents">
-                <h2><a href="/echozapp/shop2/">경기/인천/강원</a></h2>
-                <div class="post-meta">
-                  <span class="date-read">Update <span class="icon-star2"></span> Feb 14</span>
-                </div>
-              </div>
-            </div>
-
-
-            <div class="trend-entry d-flex">
-              <div class="number align-self-start">03</div>
-              <div class="trend-contents">
-                <h2><a href="/echozapp/shop3/">충청/대전</a></h2>
-                <div class="post-meta">
-                  <span class="date-read">Update <span class="icon-star2"></span> Feb 14</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="trend-entry d-flex pl-0">
-              <div class="number align-self-start">04</div>
-              <div class="trend-contents">
-                <h2><a href="/echozapp/shop4/">전라/광주</a></h2>
-                <div class="post-meta">
-                  <span class="date-read">Update <span class="icon-star2"></span> Feb 14</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="trend-entry d-flex pl-0">
-              <div class="number align-self-start">05</div>
-              <div class="trend-contents">
-                <h2><a href="/echozapp/shop5/">경상/대구/부산/울산</a></h2>
-                <div class="post-meta">
-                  <span class="date-read">Update <span class="icon-star2"></span> Feb 14</span>
-                </div>
-              </div>
-            </div>
-
-          <div class="trend-entry d-flex pl-0">
-              <div class="number align-self-start">06</div>
-              <div class="trend-contents">
-                <h2><a href="/echozapp/shop6/">제주</a></h2>
-                <div class="post-meta">
-                  <span class="date-read">Update <span class="icon-star2"></span> Feb 14</span>
-                </div>
-              </div>
-          </div>
 
         </div>
       </div>
-	</div>
-  </div>
-
-
-
-
-
-
+    </div>
 {% endblock %}
