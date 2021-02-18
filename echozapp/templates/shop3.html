@@ -99,7 +99,7 @@
 
     // 96개의 상점마커가 표시될 위치입니다
     var markerPosition = [ {% for cd in cd.all %}
-    {       {% if cd.homepage == no %}
+    {       {% if cd.homepage == "" %}
         	 	    content: '<div class="info">' + '<div class="title" style="padding:5px;">' + '{{cd.name}}' + '</div>'+'<div class="body">' + '<div class="body">' + '<div >' +  '<div>{{cd.address}}</div>' +'</div>'+'</div>'+'</div>',
             {% else %}
         		    content: '<div class="info">' + '<div class="title">' + '{{cd.name}}' + '</div>'+'<div class="body">'+ '<div class="desc">' + '<div class="ellipsis">{{cd.address}}</div>' +'<div><a href="{{cd.homepage}}" target="_blank" class="link">홈페이지</a></div>'+'</div>'+'</div>'+'</div>',

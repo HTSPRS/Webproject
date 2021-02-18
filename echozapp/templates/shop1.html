@@ -47,17 +47,17 @@
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         mapOption = {
             center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-            level: 10 // 지도의 확대 레벨
+            level: 9 // 지도의 확대 레벨
     };
 
     var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
 /* 추가부분 */
-var drawingFlag = false; // 선이 그려지고 있는 상태를 가지고 있을 변수입니다
-var moveLine; // 선이 그려지고 있을때 마우스 움직임에 따라 그려질 선 객체 입니다
-var clickLine // 마우스로 클릭한 좌표로 그려질 선 객체입니다
-var distanceOverlay; // 선의 거리정보를 표시할 커스텀오버레이 입니다
-var dots = {}; // 선이 그려지고 있을때 클릭할 때마다 클릭 지점과 거리를 표시하는 커스텀 오버레이 배열입니다.
+    var drawingFlag = false; // 선이 그려지고 있는 상태를 가지고 있을 변수입니다
+    var moveLine; // 선이 그려지고 있을때 마우스 움직임에 따라 그려질 선 객체 입니다
+    var clickLine // 마우스로 클릭한 좌표로 그려질 선 객체입니다
+    var distanceOverlay; // 선의 거리정보를 표시할 커스텀오버레이 입니다
+    var dots = {}; // 선이 그려지고 있을때 클릭할 때마다 클릭 지점과 거리를 표시하는 커스텀 오버레이 배열입니다.
 /* 추가부분 끝*/
 
 // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
@@ -99,7 +99,7 @@ var dots = {}; // 선이 그려지고 있을때 클릭할 때마다 클릭 지�
 
     // 96개의 상점마커가 표시될 위치입니다
     var markerPosition = [ {% for seoul in seoul.all %}
-    {       {% if seoul.homepage == no %}
+    {       {% if seoul.homepage == ""%}
         	 	    content: '<div class="info">' + '<div class="title" style="padding:5px;">' + '{{seoul.name}}' + '</div>'+'<div class="body">' + '<div class="body">' + '<div >' +  '<div>{{seoul.address}}</div>' +'</div>'+'</div>'+'</div>',
             {% else %}
         		    content: '<div class="info">' + '<div class="title">' + '{{seoul.name}}' + '</div>'+'<div class="body">'+ '<div class="desc">' + '<div class="ellipsis">{{seoul.address}}</div>' +'<div><a href="{{seoul.homepage}}" target="_blank" class="link">홈페이지</a></div>'+'</div>'+'</div>'+'</div>',

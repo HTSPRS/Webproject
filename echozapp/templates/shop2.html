@@ -99,7 +99,7 @@
 
     // 96개의 상점마커가 표시될 위치입니다
     var markerPosition = [ {% for gig in gig.all %}
-    {       {% if gig.homepage == no %}
+    {       {% if gig.homepage == "" %}
         	 	    content: '<div class="info">' + '<div class="title" style="padding:5px;">' + '{{gig.name}}' + '</div>'+'<div class="body">' + '<div class="body">' + '<div >' +  '<div>{{gig.address}}</div>' +'</div>'+'</div>'+'</div>',
             {% else %}
         		    content: '<div class="info">' + '<div class="title">' + '{{gig.name}}' + '</div>'+'<div class="body">'+ '<div class="desc">' + '<div class="ellipsis">{{gig.address}}</div>' +'<div><a href="{{gig.homepage}}" target="_blank" class="link">홈페이지</a></div>'+'</div>'+'</div>'+'</div>',

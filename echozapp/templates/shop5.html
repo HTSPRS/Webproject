@@ -99,7 +99,7 @@
 
     // 96개의 상점마커가 표시될 위치입니다
     var markerPosition = [ {% for gdbu in gdbu.all %}
-    {       {% if gdbu.homepage == no %}
+    {       {% if gdbu.homepage == "" %}
         	 	    content: '<div class="info">' + '<div class="title" style="padding:5px;">' + '{{gdbu.name}}' + '</div>'+'<div class="body">' + '<div class="body">' + '<div >' +  '<div>{{gdbu.address}}</div>' +'</div>'+'</div>'+'</div>',
             {% else %}
         		    content: '<div class="info">' + '<div class="title">' + '{{gdbu.name}}' + '</div>'+'<div class="body">'+ '<div class="desc">' + '<div class="ellipsis">{{gdbu.address}}</div>' +'<div><a href="{{gdbu.homepage}}" target="_blank" class="link">홈페이지</a></div>'+'</div>'+'</div>'+'</div>',

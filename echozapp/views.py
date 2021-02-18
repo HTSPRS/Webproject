@@ -27,22 +27,19 @@ def mypage(request):
         user_post = user_post.order_by('-writedate')
         myboardcount = user_post.count()
         page = request.GET.get('page', 1)
-        paginator = Paginator(user_post, 3)
+        paginator = Paginator(user_post , 3)
         user_postpage = paginator.get_page(page)
-        context ={'loginid': request.user.username,'loginuser' : request.user.last_name+request.user.first_name, 'Post' : user_post, 'myboardcount' : myboardcount, 'user_postpage' : user_postpage}
-
+        context ={'loginid': request.user.username,'loginuser' : request.user.last_name+request.user.first_name, 'user_post' : user_postpage, 'myboardcount' : myboardcount, 'user_postpage' : user_postpage}
     return render(request, 'mypage.html',context)
 
 
 #글작성
 def Boardwrite(request):
-
     title = request.POST['title']
     content = request.POST['content']
     author = request.user.id
     wdata = Post(author_id = author, title=title, content=content)
     wdata.save()
-
     return redirect("Board")
 
 def Board(request):
@@ -66,11 +63,19 @@ def Boardview(request):
     context['Boardview'] = Boardview
     return render(request, 'Boardview.html',context)
 
+def Boardview1(request):
+    context={}
+    id = request.GET['Boardview1']
+    Boardview1 = Post.objects.get(id=id)
+    Boardview1.save()
+    context['Boardview1'] = Boardview1
+    return render(request, 'Boardview1.html',context)
+
 def Boarddel(request):
     id = request.GET['id']
     view = Post.objects.get(id=id)
     view.delete()
-    return redirect('Board')
+    return redirect('mypage')
 
 def Boardupdate(request):
     if request.method == "POST":
@@ -87,12 +92,26 @@ def Boardupdate(request):
         jsonContent={"title" : update.title, "content": update.content }
         return JsonResponse( jsonContent, json_dumps_params={'ensure_ascii':False})
 
+def myBoardupdate(request):
+    if request.method == "POST":
+        id = request.GET.get('id')
+        update = Post.objects.get(id=id)
+        update.title = request.POST['title']
+        update.content = request.POST['content']
+        update.writedate = timezone.datetime.now()
+        update.save()
+        return redirect('mypage')
+    else :
+        id = request.GET.get("id")
+        update = Post.objects.get(id=id)
+        jsonContent={"title" : update.title, "content": update.content }
+        return JsonResponse( jsonContent, json_dumps_params={'ensure_ascii':False})
+
 def search1(request, name) :
     page = request.GET.get('page', 1)
     vlist = Post.objects.filter(title__contains = name)
     paginator = Paginator(vlist, 3)
     vlistpage = paginator.get_page(page)
-
     context = {"vlist": vlistpage}
     return render(request, 'Board.html', context)
 
@@ -214,12 +233,6 @@ def book3(request):
 def book4(request):
     return render(request, 'book4.html')
 
-
-
-def blogSingle(request) :
-    template = loader.get_template('blog-single.html')
-    return HttpResponse(template.render(None, request))
-
 def map(request):
     latlng = Latlng.objects.all()
     return render(request, 'map.html', {'latlng': latlng})
@@ -251,4 +264,3 @@ def shop5(request):
 def shop6(request):
     jeju = Jeju.objects.all()
     return render(request, 'shop6.html', {'jeju': jeju})
-

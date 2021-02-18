@@ -99,7 +99,7 @@
 
     // 96개의 상점마커가 표시될 위치입니다
     var markerPosition = [ {% for jeju in jeju.all %}
-    {       {% if jeju.homepage == no %}
+    {       {% if jeju.homepage == "" %}
         	 	    content: '<div class="info">' + '<div class="title" style="padding:5px;">' + '{{jeju.name}}' + '</div>'+'<div class="body">' + '<div class="body">' + '<div >' +  '<div>{{jeju.address}}</div>' +'</div>'+'</div>'+'</div>',
             {% else %}
         		    content: '<div class="info">' + '<div class="title">' + '{{jeju.name}}' + '</div>'+'<div class="body">'+ '<div class="desc">' + '<div class="ellipsis">{{jeju.address}}</div>' +'<div><a href="{{jeju.homepage}}" target="_blank" class="link">홈페이지</a></div>'+'</div>'+'</div>'+'</div>',
