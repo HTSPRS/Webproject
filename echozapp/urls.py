@@ -8,7 +8,6 @@ urlpatterns = [
     path('What/', views.What, name='What'),
     path('What2/', views.What2, name='What2'),
     path('How/', views.How, name='How'),
-    path('Where/', views.Where, name='Where'),
     path('Board/', views.Board, name='Board'),
     path('Boardwrite/', views.Boardwrite, name='Boardwrite'),
     path('Boardview/', views.Boardview, name='Boardview'),

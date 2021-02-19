@@ -11,8 +11,6 @@ from echozapp.models import Latlng, Seoul, GIG, CD, JG, GDBU, Jeju
 
 def index(request) :
     return render(request,'index.html')
-    #template = loader.get_template('index.html')
-    #return HttpResponse(template.render(None, request))
 
 def logout(request):
     if request.user.is_authenticated:
@@ -132,9 +130,6 @@ def What2(request):
 
 def How(request):
     return render(request, 'How.html')
-
-def Where(request):
-    return render(request, 'Where.html')
 
 def Events(request):
     return render(request, 'Events.html')
